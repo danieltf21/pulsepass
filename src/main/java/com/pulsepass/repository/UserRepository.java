@@ -1,8 +1,10 @@
 package com.pulsepass.repository;
 
 import com.pulsepass.domain.User;
-import org.hibernate.internal.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmailIgnoreCase(String email);
