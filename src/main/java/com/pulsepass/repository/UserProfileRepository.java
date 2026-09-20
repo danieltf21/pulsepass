@@ -1,4 +1,7 @@
 package com.pulsepass.repository;
 
-public class UserProfileRepository {
+import com.pulsepass.domain.UserProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
 }
