@@ -23,6 +23,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.ArgumentMatchers.eq;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -205,6 +206,7 @@ class TicketServiceImplTest {
         ticketService.purchase(request(TicketType.GENERAL));
 
         verify(ticketRepository).save(any(Ticket.class));
+        verify(ticketRepository).countByEventEventCodeAndStatus(eq("CMF-2026"), eq(TicketStatus.PAID));
         ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
         verify(eventRepository).save(eventCaptor.capture());
         assertThat(eventCaptor.getValue().getStatus()).isEqualTo(EventStatus.SOLD_OUT);
