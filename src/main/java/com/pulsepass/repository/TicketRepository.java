@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
@@ -17,6 +18,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     // FR-TKT-007: Query Method (justificación: filtro simple por dos campos, sin joins explícitos)
     List<Ticket> findByEvent_EventCodeAndStatus(String eventCode, TicketStatus status);
+    Optional<Ticket> findByTicketCode(String ticketCode);
+    List<Ticket> findByUserEmailIgnoreCaseOrderByPurchaseDateDesc(String email);
+    long countByEventEventCodeAndStatus(String eventCode, TicketStatus status);
 
     // FR-TKT-008: JPQL con COUNT
     @Query("""

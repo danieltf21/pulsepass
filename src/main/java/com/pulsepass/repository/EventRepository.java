@@ -22,6 +22,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     // FR-VEN-004: Query Method navegando venue.code
     List<Event> findByVenue_Code(String venueCode);
 
+    boolean existsByEventCode(String eventCode);
+
     // FR-SRC-001 / FR-ART-004: JPQL con JOIN, DISTINCT evita duplicados
     @Query("""
            SELECT DISTINCT e FROM Event e
