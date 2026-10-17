@@ -52,8 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadByUserId(userId);
 
             if (!userDetails.isEnabled()) {
-                // SEC-011: estado se revalida en cada request; una cuenta
-                // desactivada pierde acceso aunque el token siga vigente.
                 writeUnauthorized(response, "User account is inactive");
                 return;
             }
@@ -67,8 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (JwtException | IllegalArgumentException ex) {
-            // JWT expirado, manipulado, issuer incorrecto, malformado, o
-            // userId no numérico: todos se tratan como 401 uniforme.
+
             writeUnauthorized(response, "Invalid or expired token");
         } catch (org.springframework.security.core.userdetails.UsernameNotFoundException ex) {
             writeUnauthorized(response, "Invalid or expired token");

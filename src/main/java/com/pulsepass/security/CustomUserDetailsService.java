@@ -30,11 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    /**
-     * "username" aquí es el identificador que llega en LoginRequest.identifier:
-     * puede ser username o email. SEC-009: siempre se vuelve a cargar roles y
-     * estado actuales, nunca se reutiliza un principal viejo.
-     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
