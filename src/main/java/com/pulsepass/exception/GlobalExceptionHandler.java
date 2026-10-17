@@ -64,4 +64,8 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(), status.value(), status.getReasonPhrase(), message, details);
         return ResponseEntity.status(status).body(error);
     }
+    @ExceptionHandler(ForbiddenOperationException.class)
+    public ResponseEntity<ErrorResponse> handleForbidden(ForbiddenOperationException ex) {
+        return build(HttpStatus.FORBIDDEN, ex.getMessage(), Map.of());
+    }
 }

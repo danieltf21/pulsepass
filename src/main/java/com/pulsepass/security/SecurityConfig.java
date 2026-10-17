@@ -86,10 +86,15 @@ public class SecurityConfig {
                         // --- Auth autenticado ---
                         .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
 
+                        .requestMatchers(HttpMethod.GET, "/api/events/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/events/by-artist").permitAll()
+
                         // SEC-001: todo lo demás requiere autenticación
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
     }
+
 }
