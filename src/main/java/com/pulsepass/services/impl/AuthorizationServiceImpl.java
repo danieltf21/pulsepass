@@ -1,4 +1,4 @@
-package com.pulsepass.service.impl;
+package com.pulsepass.services.impl;
 
 import com.pulsepass.exception.ForbiddenOperationException;
 import com.pulsepass.security.SecurityPrincipal;
