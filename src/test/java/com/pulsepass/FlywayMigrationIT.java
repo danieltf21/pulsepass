@@ -10,7 +10,9 @@ import org.springframework.core.env.Environment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "spring.jpa.hibernate.ddl-auto=validate"
+})
 @Import(TestcontainersConfiguration.class)
 class FlywayMigrationIT {
 
@@ -21,16 +23,18 @@ class FlywayMigrationIT {
     private Environment env;
 
     @Test
-    void flywayAppliesV1V2V3() {
+    void flywayAppliesV1V2V3V4() {
         MigrationInfo[] applied = flyway.info().applied();
-        assertThat(applied).hasSize(3);
+        assertThat(applied).hasSize(4);
         assertThat(applied[0].getVersion().getVersion()).isEqualTo("1");
         assertThat(applied[1].getVersion().getVersion()).isEqualTo("2");
         assertThat(applied[2].getVersion().getVersion()).isEqualTo("3");
+        assertThat(applied[3].getVersion().getVersion()).isEqualTo("4");
     }
 
     @Test
     void hibernateValidatesSchema() {
-        assertThat(env.getProperty("spring.jpa.hibernate.ddl-auto")).isEqualTo("validate");
+        assertThat(env.getProperty("spring.jpa.hibernate.ddl-auto", String.class))
+                .isEqualTo("validate");
     }
 }

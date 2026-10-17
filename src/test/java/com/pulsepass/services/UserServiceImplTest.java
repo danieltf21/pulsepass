@@ -33,9 +33,9 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private RegisterUserRequest validRequest() {
-        new RegisterUserRequest("andrea", "andrea@email.com", "ClaveSegura123!", "Andrea", "Gómez",
-                "3001234567", "Santa Marta", LocalDate.of(2000, 5, 10));
-        return null;
+        return new RegisterUserRequest("andrea", "andrea@email.com", "ClaveSegura123!",
+                "Andrea", "Gómez", "3001234567", "Santa Marta",
+                LocalDate.of(2000, 5, 10));
     }
 
     // TEST-USER-001
