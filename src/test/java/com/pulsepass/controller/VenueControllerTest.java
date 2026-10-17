@@ -19,7 +19,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(VenueController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({com.pulsepass.security.SecurityConfig.class,
+        com.pulsepass.security.RestAuthenticationEntryPoint.class,
+        com.pulsepass.security.RestAccessDeniedHandler.class,
+        GlobalExceptionHandler.class})
 class VenueControllerTest {
 
     @Autowired

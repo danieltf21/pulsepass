@@ -33,8 +33,9 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private RegisterUserRequest validRequest() {
-        return new RegisterUserRequest("andrea", "andrea@email.com", "Andrea", "Gómez",
+        new RegisterUserRequest("andrea", "andrea@email.com", "ClaveSegura123!", "Andrea", "Gómez",
                 "3001234567", "Santa Marta", LocalDate.of(2000, 5, 10));
+        return null;
     }
 
     // TEST-USER-001
@@ -87,8 +88,8 @@ class UserServiceImplTest {
         when(userRepository.existsByUsername("andrea")).thenReturn(false);
         when(userRepository.existsByEmailIgnoreCase("andrea@email.com")).thenReturn(false);
         RegisterUserRequest futureBirth = new RegisterUserRequest("andrea", "andrea@email.com",
-                "Andrea", "Gómez", "3001234567", "Santa Marta", LocalDate.now().plusDays(1));
-
+                "ClaveSegura123!", "Andrea", "Gómez", "3001234567", "Santa Marta",
+                LocalDate.now().plusDays(1));
         assertThatThrownBy(() -> userService.register(futureBirth))
                 .isInstanceOf(BusinessRuleException.class);
 
