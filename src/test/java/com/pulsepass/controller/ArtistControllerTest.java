@@ -76,4 +76,9 @@ class ArtistControllerTest {
 
         verify(service).findActiveArtists();
     }
+    @MockitoBean
+    private com.pulsepass.security.JwtService jwtService;
+
+    @MockitoBean
+    private com.pulsepass.security.CustomUserDetailsService userDetailsService;
 }

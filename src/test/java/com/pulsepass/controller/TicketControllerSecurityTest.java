@@ -9,7 +9,7 @@ import com.pulsepass.exception.GlobalExceptionHandler;
 import com.pulsepass.security.*;
 import com.pulsepass.services.AuthorizationService;
 import com.pulsepass.services.TicketService;
-import com.pulsepass.servicesgo.UserService;
+import com.pulsepass.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;

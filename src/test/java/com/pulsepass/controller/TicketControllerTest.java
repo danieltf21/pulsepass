@@ -181,4 +181,9 @@ class TicketControllerTest {
         mockMvc.perform(patch("/api/tickets/{code}/use", "TCK-0001"))
                 .andExpect(status().isConflict());
     }
+    @MockitoBean
+    private com.pulsepass.security.JwtService jwtService;
+
+    @MockitoBean
+    private com.pulsepass.security.CustomUserDetailsService userDetailsService;
 }

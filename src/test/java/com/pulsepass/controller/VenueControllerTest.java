@@ -72,4 +72,9 @@ class VenueControllerTest {
 
         verify(service).findActiveVenues();
     }
+    @MockitoBean
+    private com.pulsepass.security.JwtService jwtService;
+
+    @MockitoBean
+    private com.pulsepass.security.CustomUserDetailsService userDetailsService;
 }

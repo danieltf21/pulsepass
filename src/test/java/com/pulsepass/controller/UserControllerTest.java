@@ -117,4 +117,9 @@ class UserControllerTest {
         mockMvc.perform(get("/api/users/by-email").param("email", "nope@email.com"))
                 .andExpect(status().isNotFound());
     }
+    @MockitoBean
+    private com.pulsepass.security.JwtService jwtService;
+
+    @MockitoBean
+    private com.pulsepass.security.CustomUserDetailsService userDetailsService;
 }
