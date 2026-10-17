@@ -299,6 +299,77 @@ Usan `@WebMvcTest` + `MockMvc`, con los Services reemplazados por `@MockitoBean`
 | `UserControllerTest` | Registrar 201, email inválido 400, username duplicado 409, consulta por email y username 200 |
 | `TicketControllerTest` | Compra 201, inválido 400, usuario inexistente 404, regla de negocio 409, consultas 200, cancelar y usar 200/409 |
 
+## Capa de Seguridad (Spring Security + JWT)
+
+Autenticación stateless con JWT (HS256, vía JJWT) y autorización por rol más control de propiedad (ownership) sobre recursos individuales. Ningún Controller implementa reglas de autorización por sí mismo más allá de delegar en `AuthorizationService` o en la matriz de `SecurityConfig`.
+
+### Roles
+| Rol | Puede |
+|---|---|
+| **USER** | Comprar sus propios tickets, consultar/cancelar sus propios tickets, ver su propio perfil |
+| **STAFF** | Validar tickets (marcar como usados), consultar tickets pagados de un evento |
+| **ADMIN** | Crear y publicar eventos, asociar artistas, acceso total a usuarios y tickets |
+
+Todo usuario registrado por `POST /api/users` recibe automáticamente `ROLE_USER`. No existe autoregistro con otro rol.
+
+### Variables de entorno
+La aplicación **no arranca** sin un secreto JWT configurado (falla rápido a propósito).
+
+| Variable | Uso | Obligatoria |
+|---|---|---|
+| `PULSEPASS_JWT_SECRET_BASE64` | Clave de firma HS256, Base64 de al menos 32 bytes | Sí, para correr la app |
+| `PULSEPASS_JWT_ISSUER` | Issuer del token | No (default: `pulsepass-api`) |
+
+**Generar un secreto local** (PowerShell):
+```powershell
+python3 -c "import base64; print(base64.b64encode(b'una-frase-secreta-de-32-bytes-o-mas').decode())"
+```
+Configúralo en IntelliJ: **Run → Edit Configurations** → tu configuración → **Environment variables** → `PULSEPASS_JWT_SECRET_BASE64=<tu-base64>`. Nunca se sube a Git ni se pone en `application.yaml`.
+
+Los tests usan su propio secreto, aislado, en `src/test/resources/application.yaml` — no requieren la variable de entorno.
+
+### Flujo de autenticación
+```
+POST /api/users          → registro público, crea User + UserProfile + credencial + ROLE_USER
+POST /api/auth/login      → { "identifier": "username o email", "password": "..." } → { "accessToken", "tokenType", "expiresIn" }
+GET  /api/auth/me          → requiere Authorization: Bearer <token> → perfil del usuario autenticado
+```
+Cualquier endpoint protegido se llama con el header:
+```
+Authorization: Bearer <accessToken>
+```
+
+### Matriz de autorización (resumen)
+| Endpoint | Regla |
+|---|---|
+| `GET /api/venues/**`, `GET /api/artists/**`, `GET /api/events/published` | Público |
+| `GET /api/events/{code}` | Público si `PUBLISHED`; si no, solo STAFF/ADMIN |
+| `POST /api/events`, `PATCH /api/events/{code}/publish`, `POST /api/events/{code}/artists/{id}` | ADMIN |
+| `POST /api/tickets` | USER, solo para sí mismo |
+| `GET /api/tickets/{code}`, `GET /api/tickets/by-user`, `PATCH /api/tickets/{code}/cancel` | Dueño del ticket o ADMIN |
+| `GET /api/events/{code}/tickets/paid`, `PATCH /api/tickets/{code}/use` | STAFF o ADMIN |
+| `GET /api/users/by-email`, `GET /api/users/by-username` | El propio usuario o ADMIN |
+| `POST /api/users`, `POST /api/auth/login` | Público |
+| `GET /api/auth/me` | Cualquier usuario autenticado |
+
+### Manejo de errores de seguridad
+| Situación | HTTP |
+|---|---|
+| Sin token en ruta protegida | 401 (`RestAuthenticationEntryPoint`) |
+| Token inválido, expirado o manipulado | 401 (`JwtAuthenticationFilter`) |
+| Cuenta desactivada | 401 |
+| Rol insuficiente | 403 (`RestAccessDeniedHandler`) |
+| Intentar acceder a un recurso de otro usuario | 403 (`ForbiddenOperationException`) |
+
+Todos los errores de seguridad usan el mismo contrato `ErrorResponse` que el resto de la API.
+
+### Pruebas de seguridad
+`src/test/java/com/pulsepass/security` y `src/test/java/com/pulsepass/controller` (sufijo `SecurityTest`): cubren la matriz de roles y ownership con `@WebMvcTest` + `spring-security-test` (`@WithMockUser`, `SecurityMockMvcRequestPostProcessors.user(...)`). `JwtServiceTest` cubre emisión/validación de tokens (expiración, firma inválida, issuer incorrecto) sin levantar contexto de Spring.
+
+```bash
+.\mvnw clean test
+```
+Ejecuta en un solo comando las pruebas de persistencia (Testcontainers), Service, Controller y Seguridad.
 ## Cómo ejecutar
 Requisitos: JDK 21 y **Docker corriendo** (Testcontainers lo necesita para las pruebas de persistencia; las de Controller no lo requieren).
 
