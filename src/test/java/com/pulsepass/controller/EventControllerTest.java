@@ -8,12 +8,20 @@ import com.pulsepass.dto.response.EventSummaryResponse;
 import com.pulsepass.exception.BusinessRuleException;
 import com.pulsepass.exception.GlobalExceptionHandler;
 import com.pulsepass.exception.ResourceNotFoundException;
+import com.pulsepass.security.CustomUserDetailsService;
+import com.pulsepass.security.JwtAuthenticationFilter;
+import com.pulsepass.security.JwtService;
+import com.pulsepass.security.RestAccessDeniedHandler;
+import com.pulsepass.security.RestAuthenticationEntryPoint;
+import com.pulsepass.security.SecurityConfig;
+import com.pulsepass.services.AuthorizationService;
 import com.pulsepass.services.EventService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +35,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(EventController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class,
+        SecurityConfig.class,
+        JwtAuthenticationFilter.class,
+        RestAuthenticationEntryPoint.class,
+        RestAccessDeniedHandler.class})
 class EventControllerTest {
 
     @Autowired
@@ -36,14 +48,24 @@ class EventControllerTest {
     @MockitoBean
     private EventService service;
 
+    @MockitoBean
+    private AuthorizationService authorizationService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
     private EventResponse event(String code, EventStatus status) {
         return new EventResponse(1L, code, "Caribbean Music Fest 2026", "desc",
                 EventCategory.MUSIC, status, LocalDateTime.now().plusMonths(2),
                 18, "VEN-SMR-01", "Marina Convention Center", Set.of());
     }
 
-    // TEST-CTRL-EVT-001
+    // TEST-CTRL-EVT-001 (ADMIN)
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldCreateEvent() throws Exception {
         when(service.create(any(CreateEventRequest.class))).thenReturn(event("CMF-2026", EventStatus.DRAFT));
 
@@ -67,8 +89,9 @@ class EventControllerTest {
         verify(service).create(any(CreateEventRequest.class));
     }
 
-    // TEST-CTRL-EVT-002
+    // TEST-CTRL-EVT-002 (ADMIN)
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldReturn400WhenCreateRequestInvalid() throws Exception {
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -112,7 +135,7 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.message").value("Event not found: NOPE"));
     }
 
-    // TEST-CTRL-EVT-005
+    // TEST-CTRL-EVT-005 (pública)
     @Test
     void shouldReturnPublishedEvents() throws Exception {
         EventSummaryResponse summary = new EventSummaryResponse("CMF-2026", "Caribbean Music Fest 2026",
@@ -127,8 +150,9 @@ class EventControllerTest {
         verify(service).findPublishedEvents();
     }
 
-    // TEST-CTRL-EVT-006
+    // TEST-CTRL-EVT-006 (ADMIN)
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldPublishEvent() throws Exception {
         when(service.publish("CMF-2026")).thenReturn(event("CMF-2026", EventStatus.PUBLISHED));
 
@@ -139,8 +163,9 @@ class EventControllerTest {
         verify(service).publish("CMF-2026");
     }
 
-    // TEST-CTRL-EVT-007
+    // TEST-CTRL-EVT-007 (ADMIN)
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldReturn409WhenPublishInvalid() throws Exception {
         when(service.publish("CMF-2026")).thenThrow(new BusinessRuleException("Only a DRAFT event can be published"));
 
@@ -150,8 +175,9 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.message").value("Only a DRAFT event can be published"));
     }
 
-    // TEST-CTRL-EVT-008
+    // TEST-CTRL-EVT-008 (ADMIN)
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldAddArtistToEvent() throws Exception {
         when(service.addArtist("CMF-2026", 1L)).thenReturn(event("CMF-2026", EventStatus.DRAFT));
 
