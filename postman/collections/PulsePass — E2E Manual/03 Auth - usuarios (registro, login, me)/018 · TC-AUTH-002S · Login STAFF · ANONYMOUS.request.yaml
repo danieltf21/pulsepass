@@ -1,16 +1,16 @@
 $kind: http-request
 description: |-
-  ID: TC-AUTH-002S
-  Paso de ejecución: 018
-  Objetivo: Login STAFF
-  Actor: ANONYMOUS
-  Precondiciones: Seed aplicado; staffPassword igual al usado con -v staff_pw.
-  Autorización: Sin Authorization (pestaña Authorization en No Auth)
-  Ejecución: abrir request y pulsar Send
-  HTTP esperado: 200
-  Revisión manual: 200 con accessToken.
-  COPIAR a mano: accessToken -> variable staffToken
-  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  ID: TC-AUTH-002S  
+  Paso de ejecución: 018  
+  Objetivo: Login STAFF  
+  Actor: ANONYMOUS  
+  Precondiciones: Seed aplicado; staffPassword igual al usado con -v staff_pw.  
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)  
+  Ejecución: abrir request y pulsar Send  
+  HTTP esperado: 200  
+  Revisión manual: 200 con accessToken.  
+  COPIAR a mano: accessToken -> variable staffToken  
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md  
   La pestaña de scripts debe permanecer vacía.
 url: "{{baseUrl}}/api/auth/login"
 method: POST

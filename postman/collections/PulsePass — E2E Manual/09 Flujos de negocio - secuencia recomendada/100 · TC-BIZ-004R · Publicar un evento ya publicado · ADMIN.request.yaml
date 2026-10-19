@@ -1,15 +1,15 @@
 $kind: http-request
 description: |-
-  ID: TC-BIZ-004R
-  Paso de ejecución: 100
-  Objetivo: Publicar un evento ya publicado
-  Actor: ADMIN
-  Precondiciones: Backend arriba y pasos anteriores ejecutados.
-  Autorización: Bearer {{adminToken}}
-  Ejecución: abrir request y pulsar Send
-  HTTP esperado: 200 o 409 (regla del Service)
-  Revisión manual: Anota el comportamiento; el evento sigue PUBLISHED.
-  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  ID: TC-BIZ-004R  
+  Paso de ejecución: 100  
+  Objetivo: Publicar un evento ya publicado  
+  Actor: ADMIN  
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.  
+  Autorización: Bearer {{adminToken}}  
+  Ejecución: abrir request y pulsar Send  
+  HTTP esperado: 200 o 409 (regla del Service)  
+  Revisión manual: Anota el comportamiento; el evento sigue PUBLISHED.  
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md  
   La pestaña de scripts debe permanecer vacía.
 url: "{{baseUrl}}/api/events/{{newEventCode}}/publish"
 method: PATCH

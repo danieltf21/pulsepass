@@ -19,8 +19,13 @@ public class User {
     @Column(nullable = false)
     private boolean active = true;
 
-    @OneToOne(mappedBy = "user")
+    // Asegura la cascada también para el perfil
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile profile;
+
+    // 1. Agregar la relación bidireccional con UserCredential
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserCredential credential;
 
     public User() {
     }
@@ -39,4 +44,8 @@ public class User {
 
     public UserProfile getProfile() { return profile; }
     public void setProfile(UserProfile profile) { this.profile = profile; }
+
+    // 2. Agregar los métodos para que UserServiceImpl pueda acceder a ellos
+    public UserCredential getCredential() { return credential; }
+    public void setCredential(UserCredential credential) { this.credential = credential; }
 }
