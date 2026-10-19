@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-01
+  Paso de ejecución: 078
+  Objetivo: Registro con email mal formado
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 400
+  Revisión manual: ErrorResponse 400 con details sobre email.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "{{userAUsername}}",
+      "email": "no-es-un-email",
+      "password": "{{userAPassword}}",
+      "firstName": "Andrea",
+      "lastName": "Pruebas",
+      "birthDate": "1998-05-15"
+    }
+auth:
+  type: noauth
+order: 1000

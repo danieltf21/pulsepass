@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  ID: TC-USR-ADM
+  Paso de ejecución: 052
+  Objetivo: ADMIN consulta a USER_A por email
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: 200 con datos de A (ADMIN autorizado).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-email?email={{userAEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userAEmail}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 3000

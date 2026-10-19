@@ -1,0 +1,20 @@
+$kind: http-request
+description: |-
+  ID: E2E-VEN-01N
+  Paso de ejecución: 004
+  Objetivo: Venue inexistente
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 404
+  Revisión manual: ErrorResponse con timestamp, status=404, error, message, details; sin stack trace.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/venues/NO-EXISTE-{{runId}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 3000

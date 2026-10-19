@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  ID: E2E-USR-01
+  Paso de ejecución: 013
+  Objetivo: Registrar USER_A
+  Actor: ANONYMOUS
+  Precondiciones: userAPassword en el ambiente con 12 a 72 caracteres.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 201
+  Revisión manual: UserResponse (id, username, email, active=true, firstName, lastName). SIN password ni hash. Sin token en el body.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "{{userAUsername}}",
+      "email": "{{userAEmail}}",
+      "password": "{{userAPassword}}",
+      "firstName": "Andrea",
+      "lastName": "Pruebas",
+      "birthDate": "1998-05-15"
+    }
+auth:
+  type: noauth
+order: 1000

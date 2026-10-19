@@ -1,0 +1,23 @@
+$kind: http-request
+name: 065 · TC-SEC-012 · USER_B marca como usado el ticket T2 · USER_B
+description: |-
+  ID: TC-SEC-012
+  Paso de ejecución: 065
+  Objetivo: USER_B marca como usado el ticket T2
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403
+  Revisión manual: 403; el ticket no debe cambiar.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use"
+method: PATCH
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 27000

@@ -1,0 +1,34 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-08
+  Paso de ejecución: 086
+  Objetivo: Evento sin nombre
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 400
+  Revisión manual: 400 con details sobre name.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "eventCode": "E2E-NEG-{{runId}}",
+      "description": "Evento de prueba manual",
+      "category": "MUSIC",
+      "eventDate": "2028-06-15T20:00:00",
+      "minimumAge": 0,
+      "venueCode": "{{venueActiveCode}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 8000

@@ -1,0 +1,25 @@
+$kind: http-request
+name: "069 · TC-SEC-INT4 · Integridad: USER_B no tiene tickets · USER_B"
+description: |-
+  ID: TC-SEC-INT4
+  Paso de ejecución: 069
+  Objetivo: Integridad: USER_B no tiene tickets
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Arreglo vacío: la compra ajena no generó ticket.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/by-user?email={{userBEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userBEmail}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 3000

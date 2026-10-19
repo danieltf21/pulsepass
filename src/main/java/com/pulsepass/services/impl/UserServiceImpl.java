@@ -1,6 +1,7 @@
 package com.pulsepass.services.impl;
 
 import com.pulsepass.domain.User;
+import com.pulsepass.domain.UserCredential;
 import com.pulsepass.domain.UserProfile;
 import com.pulsepass.dto.request.RegisterUserRequest;
 import com.pulsepass.dto.response.UserResponse;
@@ -11,10 +12,12 @@ import com.pulsepass.mapper.UserMapper;
 import com.pulsepass.repository.UserProfileRepository;
 import com.pulsepass.repository.UserRepository;
 import com.pulsepass.services.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,13 +25,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
                            UserProfileRepository userProfileRepository,
-                           UserMapper userMapper) {
+                           UserMapper userMapper,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -54,7 +60,14 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.email());
         user.setActive(true); // BR-USER-003
 
-        User savedUser = userRepository.save(user); // BR-USER-004 (misma transacción)
+        UserCredential credential = new UserCredential();
+        credential.setPasswordHash(passwordEncoder.encode(request.password()));
+        credential.setPasswordChangedAt(LocalDateTime.now());
+
+        credential.setUser(user);
+        user.setCredential(credential);
+
+        User savedUser = userRepository.save(user); // BR-USER-004
 
         UserProfile profile = new UserProfile();
         profile.setFirstName(request.firstName());

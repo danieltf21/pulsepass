@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: E2E-AUTH-02
+  Paso de ejecución: 020
+  Objetivo: Quién soy (USER_A)
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: username de A, email de A, roles=[USER]. Sin password ni hash.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/me"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 8000

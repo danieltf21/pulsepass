@@ -1,0 +1,25 @@
+$kind: http-request
+name: 063 · TC-SEC-010 · USER_B lista tickets del email de A · USER_B
+description: |-
+  ID: TC-SEC-010
+  Paso de ejecución: 063
+  Objetivo: USER_B lista tickets del email de A
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)
+  Revisión manual: Sin información de A.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/by-user?email={{userAEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userAEmail}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 25000

@@ -1,0 +1,23 @@
+$kind: http-request
+name: 031 · TC-AUTH-015 · JWT inválido en endpoint público · ANONYMOUS
+description: |-
+  ID: TC-AUTH-015
+  Paso de ejecución: 031
+  Objetivo: JWT inválido en endpoint público
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: 
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401 (el filtro JWT rechaza tokens inválidos incluso en rutas públicas)
+  Revisión manual: Documenta la política observada: 401 o 200. El código actual rechaza con 401.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/venues/active"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 9000

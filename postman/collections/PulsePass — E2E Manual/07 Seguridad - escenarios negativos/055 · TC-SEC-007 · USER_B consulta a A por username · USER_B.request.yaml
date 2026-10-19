@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  ID: TC-SEC-007
+  Paso de ejecución: 055
+  Objetivo: USER_B consulta a A por username
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)
+  Revisión manual: Sin datos personales de A. Mismo código que TC-SEC-006.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-username?username={{userAUsername}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  username: "{{userAUsername}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 22000

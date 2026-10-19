@@ -1,0 +1,23 @@
+$kind: http-request
+name: 053 · TC-SEC-006A · Consultar usuario por email sin token · ANONYMOUS
+description: |-
+  ID: TC-SEC-006A
+  Paso de ejecución: 053
+  Objetivo: Consultar usuario por email sin token
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401
+  Revisión manual: ErrorResponse 401.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-email?email={{userAEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userAEmail}}"
+auth:
+  type: noauth
+order: 20000

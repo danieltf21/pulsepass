@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-SEC-009
+  Paso de ejecución: 062
+  Objetivo: USER_B lee el ticket de A
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)
+  Revisión manual: Sin datos del ticket.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 24000

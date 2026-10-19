@@ -1,0 +1,23 @@
+$kind: http-request
+name: 037 · TC-SEC-005 · Por artista (visitante) con un borrador asociado · ANONYMOUS
+description: |-
+  ID: TC-SEC-005
+  Paso de ejecución: 037
+  Objetivo: Por artista (visitante) con un borrador asociado
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Contiene E2E-PUB-01 pero NO newEventCode (aún borrador).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  stageName: "{{artistStageName}}"
+auth:
+  type: noauth
+order: 11000

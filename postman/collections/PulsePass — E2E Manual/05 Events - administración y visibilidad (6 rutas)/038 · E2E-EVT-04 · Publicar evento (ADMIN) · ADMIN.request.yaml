@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: E2E-EVT-04
+  Paso de ejecución: 038
+  Objetivo: Publicar evento (ADMIN)
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: status=PUBLISHED en la respuesta.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{newEventCode}}/publish"
+method: PATCH
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 8000

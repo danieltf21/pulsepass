@@ -1,0 +1,29 @@
+$kind: http-request
+description: |-
+  ID: TC-AUTH-002A
+  Paso de ejecución: 019
+  Objetivo: Login ADMIN
+  Actor: ANONYMOUS
+  Precondiciones: Seed aplicado; adminPassword igual al usado con -v admin_pw.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: 200 con accessToken.
+  COPIAR a mano: accessToken -> variable adminToken
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "identifier": "{{adminIdentifier}}",
+      "password": "{{adminPassword}}"
+    }
+auth:
+  type: noauth
+order: 7000

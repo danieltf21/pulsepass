@@ -1,0 +1,23 @@
+$kind: http-request
+name: "049 · TC-SEC-INT1 · Integridad: E2E-TOPUB-01 sigue en borrador · ADMIN"
+description: |-
+  ID: TC-SEC-INT1
+  Paso de ejecución: 049
+  Objetivo: Integridad: E2E-TOPUB-01 sigue en borrador
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: status=DRAFT y sin artistas: los 403 anteriores no cambiaron nada.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{eventToPublishCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 19000

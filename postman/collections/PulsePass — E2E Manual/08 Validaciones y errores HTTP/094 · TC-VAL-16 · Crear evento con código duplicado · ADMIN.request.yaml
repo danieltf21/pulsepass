@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-16
+  Paso de ejecución: 094
+  Objetivo: Crear evento con código duplicado
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 409
+  Revisión manual: 409: newEventCode ya existe; no se duplica.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "eventCode": "{{newEventCode}}",
+      "name": "PulsePass E2E {{runId}}",
+      "description": "Evento de prueba manual",
+      "category": "MUSIC",
+      "eventDate": "2028-06-15T20:00:00",
+      "minimumAge": 0,
+      "venueCode": "{{venueActiveCode}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 16000

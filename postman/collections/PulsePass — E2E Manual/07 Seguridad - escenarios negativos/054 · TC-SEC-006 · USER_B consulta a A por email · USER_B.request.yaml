@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  ID: TC-SEC-006  
+  Paso de ejecución: 054  
+  Objetivo: USER_B consulta a A por email  
+  Actor: USER_B  
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.  
+  Autorización: Bearer {{userBToken}}  
+  Ejecución: abrir request y pulsar Send  
+  HTTP esperado: 403 o 404\* (la política única que adoptes para recurso ajeno)  
+  Revisión manual: Sin datos personales de A. Anota 403 o 404.  
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md  
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-email?email={{userAEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userAEmail}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 21000

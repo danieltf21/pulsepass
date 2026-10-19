@@ -1,0 +1,23 @@
+$kind: http-request
+name: 076 · TC-SEC-012B · USER_A intenta usar su propio ticket · USER_A
+description: |-
+  ID: TC-SEC-012B
+  Paso de ejecución: 076
+  Objetivo: USER_A intenta usar su propio ticket
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403
+  Revisión manual: 403 (USER no puede marcar uso).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use"
+method: PATCH
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 29000

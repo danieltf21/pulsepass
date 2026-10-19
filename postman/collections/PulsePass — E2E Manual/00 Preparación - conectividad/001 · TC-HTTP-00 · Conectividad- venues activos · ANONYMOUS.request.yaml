@@ -1,0 +1,21 @@
+$kind: http-request
+name: "001 · TC-HTTP-00 · Conectividad: venues activos · ANONYMOUS"
+description: |-
+  ID: TC-HTTP-00
+  Paso de ejecución: 001
+  Objetivo: Conectividad: venues activos
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y seed aplicado.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Arreglo JSON con E2E-VENUE-01; Content-Type application/json.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/venues/active"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 1000

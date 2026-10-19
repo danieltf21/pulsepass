@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  ID: E2E-EVT-01
+  Paso de ejecución: 032
+  Objetivo: Crear evento (ADMIN)
+  Actor: ADMIN
+  Precondiciones: adminToken vigente (dura 15 min).
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 201
+  Revisión manual: EventResponse con eventCode=newEventCode, status=DRAFT, venueCode=E2E-VENUE-01, minimumAge=0.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "eventCode": "{{newEventCode}}",
+      "name": "PulsePass E2E {{runId}}",
+      "description": "Evento de prueba manual",
+      "category": "MUSIC",
+      "eventDate": "2028-06-15T20:00:00",
+      "minimumAge": 0,
+      "venueCode": "{{venueActiveCode}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 4000

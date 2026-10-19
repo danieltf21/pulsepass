@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-AUTH-012
+  Paso de ejecución: 029
+  Objetivo: Token por query string
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401
+  Revisión manual: 401: el token en la URL no autentica.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/me?access_token={{userAToken}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  access_token: "{{userAToken}}"
+auth:
+  type: noauth
+order: 7000

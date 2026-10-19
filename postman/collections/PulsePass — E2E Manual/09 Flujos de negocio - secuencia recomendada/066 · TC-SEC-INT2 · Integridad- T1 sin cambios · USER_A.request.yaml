@@ -1,0 +1,23 @@
+$kind: http-request
+name: "066 · TC-SEC-INT2 · Integridad: T1 sin cambios · USER_A"
+description: |-
+  ID: TC-SEC-INT2
+  Paso de ejecución: 066
+  Objetivo: Integridad: T1 sin cambios
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Mismo status que justo tras la compra (no cancelado por B).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 1000

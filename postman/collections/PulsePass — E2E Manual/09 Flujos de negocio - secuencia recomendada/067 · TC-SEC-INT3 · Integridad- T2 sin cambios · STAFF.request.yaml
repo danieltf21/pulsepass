@@ -1,0 +1,23 @@
+$kind: http-request
+name: "067 · TC-SEC-INT3 · Integridad: T2 sin cambios · STAFF"
+description: |-
+  ID: TC-SEC-INT3
+  Paso de ejecución: 067
+  Objetivo: Integridad: T2 sin cambios
+  Actor: STAFF
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{staffToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Mismo status que tras la compra (no usado por B).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketUsableCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{staffToken}}"
+order: 2000

@@ -1,0 +1,32 @@
+$kind: http-request
+name: 089 · TC-VAL-11 · Compra con tipo de ticket inválido · USER_A
+description: |-
+  ID: TC-VAL-11
+  Paso de ejecución: 089
+  Objetivo: Compra con tipo de ticket inválido
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 400
+  Revisión manual: 400; no se crea ticket.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "userEmail": "{{userAEmail}}",
+      "eventCode": "{{publishedEventCode}}",
+      "type": "VIP_PLUS"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 11000

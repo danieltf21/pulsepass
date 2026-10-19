@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-BIZ-012
+  Paso de ejecución: 074
+  Objetivo: Verificar T2 usado
+  Actor: STAFF
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{staffToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: status=USED persistido.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketUsableCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{staffToken}}"
+order: 6000

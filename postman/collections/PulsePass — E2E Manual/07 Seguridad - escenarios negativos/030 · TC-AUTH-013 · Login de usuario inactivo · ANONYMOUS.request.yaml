@@ -1,0 +1,28 @@
+$kind: http-request
+description: |-
+  ID: TC-AUTH-013
+  Paso de ejecución: 030
+  Objetivo: Login de usuario inactivo
+  Actor: ANONYMOUS
+  Precondiciones: Seed aplicado; inactivePassword igual al usado con -v inactive_pw.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401
+  Revisión manual: 401; la respuesta NO trae accessToken.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "identifier": "{{inactiveIdentifier}}",
+      "password": "{{inactivePassword}}"
+    }
+auth:
+  type: noauth
+order: 8000

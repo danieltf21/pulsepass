@@ -1,0 +1,29 @@
+$kind: http-request
+name: 025 · TC-AUTH-005 · Login con identificador inexistente · ANONYMOUS
+description: |-
+  ID: TC-AUTH-005
+  Paso de ejecución: 025
+  Objetivo: Login con identificador inexistente
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401
+  Revisión manual: 401 con el MISMO mensaje que TC-AUTH-004 (sin enumerar usuarios).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "identifier": "noexiste_{{runId}}",
+      "password": "ClaveIncorrecta-123"
+    }
+auth:
+  type: noauth
+order: 3000

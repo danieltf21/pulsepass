@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  ID: E2E-TKT-03
+  Paso de ejecución: 058
+  Objetivo: Tickets de USER_A
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Arreglo con T1.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/by-user?email={{userAEmail}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  email: "{{userAEmail}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 3000

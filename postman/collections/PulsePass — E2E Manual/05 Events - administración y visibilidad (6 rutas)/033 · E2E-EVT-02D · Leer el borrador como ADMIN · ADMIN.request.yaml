@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: E2E-EVT-02D
+  Paso de ejecución: 033
+  Objetivo: Leer el borrador como ADMIN
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: 200 con status=DRAFT (el ADMIN sí ve borradores).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{newEventCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 5000

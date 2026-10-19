@@ -1,0 +1,21 @@
+$kind: http-request
+name: 026 · TC-AUTH-007 · /me sin header Authorization · ANONYMOUS
+description: |-
+  ID: TC-AUTH-007
+  Paso de ejecución: 026
+  Objetivo: /me sin header Authorization
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 401
+  Revisión manual: ErrorResponse 401.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/me"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 4000

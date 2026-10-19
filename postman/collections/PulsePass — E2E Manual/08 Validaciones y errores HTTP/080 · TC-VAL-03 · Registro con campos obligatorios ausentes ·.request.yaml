@@ -1,0 +1,28 @@
+$kind: http-request
+name: 080 · TC-VAL-03 · Registro con campos obligatorios ausentes · ANONYMOUS
+description: |-
+  ID: TC-VAL-03
+  Paso de ejecución: 080
+  Objetivo: Registro con campos obligatorios ausentes
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 400
+  Revisión manual: 400 con details de varios campos.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "solo_{{runId}}"
+    }
+auth:
+  type: noauth
+order: 3000
