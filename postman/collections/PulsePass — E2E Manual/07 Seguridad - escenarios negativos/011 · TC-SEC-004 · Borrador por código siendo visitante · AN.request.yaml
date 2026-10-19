@@ -1,0 +1,21 @@
+$kind: http-request
+name: 011 · TC-SEC-004 · Borrador por código siendo visitante · ANONYMOUS
+description: |-
+  ID: TC-SEC-004
+  Paso de ejecución: 011
+  Objetivo: Borrador por código siendo visitante
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 404 o 403 (política definida); sin datos del borrador
+  Revisión manual: No debe aparecer ningún dato del evento E2E-DRAFT-01. Anota qué código devolvió (403 o 404).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{draftEventCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 1000

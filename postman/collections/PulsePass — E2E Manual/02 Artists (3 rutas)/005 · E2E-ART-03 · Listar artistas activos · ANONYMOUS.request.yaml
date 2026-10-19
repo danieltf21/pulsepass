@@ -1,0 +1,21 @@
+$kind: http-request
+description: |-
+  ID: E2E-ART-03
+  Paso de ejecución: 005
+  Objetivo: Listar artistas activos
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Los 5 artistas de la migración V2, todos active=true.
+  COPIAR a mano: el 'id' de 'Solar Beat' -> variable artistId
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/artists/active"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 1000

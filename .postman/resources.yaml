@@ -2,6 +2,10 @@
 workspace:
   id: 66342b4d-e9b4-485a-861d-4a4fc9f4aade
 
+cloudResources:
+  collections:
+    ../postman/collections/PulsePass — E2E Manual: 73c75a8c-d194-46ac-8d9f-6388f2a95395
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

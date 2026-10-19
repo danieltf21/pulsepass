@@ -1,0 +1,34 @@
+$kind: http-request
+name: 082 · TC-SEC-016 · Registro con role=ADMIN inyectado · ANONYMOUS
+description: |-
+  ID: TC-SEC-016
+  Paso de ejecución: 082
+  Objetivo: Registro con role=ADMIN inyectado
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 201 o 400 (campo role ignorado o rechazado)
+  Revisión manual: El usuario NUNCA debe ser ADMIN. Verifica en BD: docker exec -i pulsepass-db psql -U pulsepass -d pulsepass_e2e -c "SELECT u.username, r.role FROM users u JOIN user_roles r ON r.user_id=u.id WHERE u.username LIKE 'inject_%';" (solo USER, o ninguna fila si el registro fue 400).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "inject_{{runId}}",
+      "email": "inject.{{runId}}@example.test",
+      "password": "{{userBPassword}}",
+      "firstName": "Inyec",
+      "lastName": "Cion",
+      "birthDate": "1998-05-15",
+      "role": "ADMIN"
+    }
+auth:
+  type: noauth
+order: 30000

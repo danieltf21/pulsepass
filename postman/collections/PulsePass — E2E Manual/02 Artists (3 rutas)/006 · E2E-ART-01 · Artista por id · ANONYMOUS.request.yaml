@@ -1,0 +1,20 @@
+$kind: http-request
+description: |-
+  ID: E2E-ART-01
+  Paso de ejecución: 006
+  Objetivo: Artista por id
+  Actor: ANONYMOUS
+  Precondiciones: artistId copiado en el paso anterior.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: stageName='Solar Beat', country, genre, active.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/artists/{{artistId}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 2000

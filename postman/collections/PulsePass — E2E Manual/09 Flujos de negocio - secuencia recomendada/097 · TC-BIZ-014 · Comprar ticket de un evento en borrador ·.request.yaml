@@ -1,0 +1,32 @@
+$kind: http-request
+name: 097 · TC-BIZ-014 · Comprar ticket de un evento en borrador · USER_A
+description: |-
+  ID: TC-BIZ-014
+  Paso de ejecución: 097
+  Objetivo: Comprar ticket de un evento en borrador
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: error de negocio (400/404/409 según contrato)
+  Revisión manual: Rechazado; no se persiste ticket.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "userEmail": "{{userAEmail}}",
+      "eventCode": "{{draftEventCode}}",
+      "type": "GENERAL"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 9000

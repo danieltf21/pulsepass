@@ -1,0 +1,21 @@
+$kind: http-request
+name: 039 · E2E-EVT-02B · El evento ya es público (visitante) · ANONYMOUS
+description: |-
+  ID: E2E-EVT-02B
+  Paso de ejecución: 039
+  Objetivo: El evento ya es público (visitante)
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: 200 con status=PUBLISHED y el artista asociado.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{newEventCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 9000

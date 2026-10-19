@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-04
+  Paso de ejecución: 081
+  Objetivo: Registro duplicado de USER_A
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 409
+  Revisión manual: 409 (username/email ya existen); sin datos internos.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "{{userAUsername}}",
+      "email": "{{userAEmail}}",
+      "password": "{{userAPassword}}",
+      "firstName": "Andrea",
+      "lastName": "Pruebas",
+      "birthDate": "1998-05-15"
+    }
+auth:
+  type: noauth
+order: 4000

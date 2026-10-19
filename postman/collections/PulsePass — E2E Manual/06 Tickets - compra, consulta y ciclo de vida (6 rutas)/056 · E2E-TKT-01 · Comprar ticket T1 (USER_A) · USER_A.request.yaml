@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  ID: E2E-TKT-01
+  Paso de ejecución: 056
+  Objetivo: Comprar ticket T1 (USER_A)
+  Actor: USER_A
+  Precondiciones: E2E-PUB-01 publicado y userAToken vigente.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 201
+  Revisión manual: ticketCode generado, type=GENERAL, userEmail=A, eventCode=E2E-PUB-01. Anota el status inicial.
+  COPIAR a mano: ticketCode -> variable ticketCancelableCode
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "userEmail": "{{userAEmail}}",
+      "eventCode": "{{publishedEventCode}}",
+      "type": "GENERAL"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 1000

@@ -1,0 +1,21 @@
+$kind: http-request
+name: 009 · E2E-EVT-03A · Eventos publicados (antes de crear el nuevo) · ANONYMOUS
+description: |-
+  ID: E2E-EVT-03A
+  Paso de ejecución: 009
+  Objetivo: Eventos publicados (antes de crear el nuevo)
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Contiene E2E-PUB-01. NO contiene E2E-DRAFT-01 ni E2E-TOPUB-01 (ningún borrador).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/published"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 1000

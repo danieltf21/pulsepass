@@ -1,0 +1,4 @@
+$kind: collection
+name: 09 Flujos de negocio / secuencia recomendada
+description: Verificaciones de integridad y transiciones. La secuencia GLOBAL de ejecución es el número que antecede a cada nombre (001, 002, ...) y está listada en checklist-e2e-manual.md.
+order: 10000

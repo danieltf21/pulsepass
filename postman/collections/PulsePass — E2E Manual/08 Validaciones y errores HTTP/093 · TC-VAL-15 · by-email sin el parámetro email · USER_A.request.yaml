@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-15
+  Paso de ejecución: 093
+  Objetivo: by-email sin el parámetro email
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 400
+  Revisión manual: 400 (parámetro obligatorio ausente), sin stack trace.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-email"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 15000

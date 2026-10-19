@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  ID: TC-BIZ-006
+  Paso de ejecución: 014
+  Objetivo: Registrar USER_B
+  Actor: ANONYMOUS
+  Precondiciones: userBPassword en el ambiente con 12 a 72 caracteres.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 201
+  Revisión manual: Datos distintos a USER_A; sin password ni hash.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "{{userBUsername}}",
+      "email": "{{userBEmail}}",
+      "password": "{{userBPassword}}",
+      "firstName": "Bruno",
+      "lastName": "Pruebas",
+      "birthDate": "1998-05-15"
+    }
+auth:
+  type: noauth
+order: 2000

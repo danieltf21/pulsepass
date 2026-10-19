@@ -1,0 +1,3963 @@
+{
+  "info": {
+    "name": "PulsePass — E2E Manual",
+    "description": "Colección Postman v2.1 para pruebas end-to-end MANUALES de PulsePass (Fase 5). Sin scripts de Pre-request ni Tests: cada request se envía con Send y el resultado se compara a mano. Sigue el orden numérico de los nombres (001, 002, ...). Tokens y contraseñas viven solo en el ambiente local.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 Preparación / conectividad",
+      "description": "",
+      "item": [
+        {
+          "name": "001 · TC-HTTP-00 · Conectividad: venues activos · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/venues/active",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "venues",
+                "active"
+              ]
+            },
+            "description": "ID: TC-HTTP-00\nPaso de ejecución: 001\nObjetivo: Conectividad: venues activos\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y seed aplicado.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Arreglo JSON con E2E-VENUE-01; Content-Type application/json.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "01 Venues (2 rutas)",
+      "description": "",
+      "item": [
+        {
+          "name": "002 · E2E-VEN-02 · Listar venues activos · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/venues/active",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "venues",
+                "active"
+              ]
+            },
+            "description": "ID: E2E-VEN-02\nPaso de ejecución: 002\nObjetivo: Listar venues activos\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Solo venues con active=true; incluye venueActiveCode.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "003 · E2E-VEN-01 · Venue por código · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/venues/{{venueActiveCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "venues",
+                "{{venueActiveCode}}"
+              ]
+            },
+            "description": "ID: E2E-VEN-01\nPaso de ejecución: 003\nObjetivo: Venue por código\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: code=E2E-VENUE-01, name='Venue E2E', city='Santa Marta', capacity=500, active=true.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "004 · E2E-VEN-01N · Venue inexistente · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/venues/NO-EXISTE-{{runId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "venues",
+                "NO-EXISTE-{{runId}}"
+              ]
+            },
+            "description": "ID: E2E-VEN-01N\nPaso de ejecución: 004\nObjetivo: Venue inexistente\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: ErrorResponse con timestamp, status=404, error, message, details; sin stack trace.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 Artists (3 rutas)",
+      "description": "",
+      "item": [
+        {
+          "name": "005 · E2E-ART-03 · Listar artistas activos · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/artists/active",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "artists",
+                "active"
+              ]
+            },
+            "description": "ID: E2E-ART-03\nPaso de ejecución: 005\nObjetivo: Listar artistas activos\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Los 5 artistas de la migración V2, todos active=true.\nCOPIAR a mano: el 'id' de 'Solar Beat' -> variable artistId\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "006 · E2E-ART-01 · Artista por id · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/artists/{{artistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "artists",
+                "{{artistId}}"
+              ]
+            },
+            "description": "ID: E2E-ART-01\nPaso de ejecución: 006\nObjetivo: Artista por id\nActor: ANONYMOUS\nPrecondiciones: artistId copiado en el paso anterior.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: stageName='Solar Beat', country, genre, active.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "007 · E2E-ART-01N · Artista inexistente · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/artists/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "artists",
+                "999999"
+              ]
+            },
+            "description": "ID: E2E-ART-01N\nPaso de ejecución: 007\nObjetivo: Artista inexistente\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: ErrorResponse con status=404.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "008 · E2E-ART-02 · Artista por nombre artístico · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/artists/by-stage-name?stageName={{artistStageName}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "artists",
+                "by-stage-name"
+              ],
+              "query": [
+                {
+                  "key": "stageName",
+                  "value": "{{artistStageName}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-ART-02\nPaso de ejecución: 008\nObjetivo: Artista por nombre artístico\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Devuelve 'Solar Beat', mismo id que artistId.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 Auth / usuarios (registro, login, me)",
+      "description": "",
+      "item": [
+        {
+          "name": "013 · E2E-USR-01 · Registrar USER_A · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: E2E-USR-01\nPaso de ejecución: 013\nObjetivo: Registrar USER_A\nActor: ANONYMOUS\nPrecondiciones: userAPassword en el ambiente con 12 a 72 caracteres.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201\nRevisión manual: UserResponse (id, username, email, active=true, firstName, lastName). SIN password ni hash. Sin token en el body.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{userAUsername}}\",\n  \"email\": \"{{userAEmail}}\",\n  \"password\": \"{{userAPassword}}\",\n  \"firstName\": \"Andrea\",\n  \"lastName\": \"Pruebas\",\n  \"birthDate\": \"1998-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "014 · TC-BIZ-006 · Registrar USER_B · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-BIZ-006\nPaso de ejecución: 014\nObjetivo: Registrar USER_B\nActor: ANONYMOUS\nPrecondiciones: userBPassword en el ambiente con 12 a 72 caracteres.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201\nRevisión manual: Datos distintos a USER_A; sin password ni hash.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{userBUsername}}\",\n  \"email\": \"{{userBEmail}}\",\n  \"password\": \"{{userBPassword}}\",\n  \"firstName\": \"Bruno\",\n  \"lastName\": \"Pruebas\",\n  \"birthDate\": \"1998-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "015 · E2E-AUTH-01 · Login USER_A (username) · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: E2E-AUTH-01\nPaso de ejecución: 015\nObjetivo: Login USER_A (username)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: accessToken no vacío, tokenType=Bearer, expiresIn=900.\nCOPIAR a mano: accessToken -> variable userAToken (solo el valor, sin comillas)\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{userAUsername}}\",\n  \"password\": \"{{userAPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "016 · TC-AUTH-003 · Login USER_A (email) · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-003\nPaso de ejecución: 016\nObjetivo: Login USER_A (email)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con accessToken; mismo usuario. No hace falta copiar este token.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{userAEmail}}\",\n  \"password\": \"{{userAPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "017 · TC-AUTH-002B · Login USER_B · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-002B\nPaso de ejecución: 017\nObjetivo: Login USER_B\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con accessToken.\nCOPIAR a mano: accessToken -> variable userBToken\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{userBUsername}}\",\n  \"password\": \"{{userBPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "018 · TC-AUTH-002S · Login STAFF · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-002S\nPaso de ejecución: 018\nObjetivo: Login STAFF\nActor: ANONYMOUS\nPrecondiciones: Seed aplicado; staffPassword igual al usado con -v staff_pw.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con accessToken.\nCOPIAR a mano: accessToken -> variable staffToken\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{staffIdentifier}}\",\n  \"password\": \"{{staffPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "019 · TC-AUTH-002A · Login ADMIN · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-002A\nPaso de ejecución: 019\nObjetivo: Login ADMIN\nActor: ANONYMOUS\nPrecondiciones: Seed aplicado; adminPassword igual al usado con -v admin_pw.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con accessToken.\nCOPIAR a mano: accessToken -> variable adminToken\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{adminIdentifier}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "020 · E2E-AUTH-02 · Quién soy (USER_A) · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: E2E-AUTH-02\nPaso de ejecución: 020\nObjetivo: Quién soy (USER_A)\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: username de A, email de A, roles=[USER]. Sin password ni hash.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "021 · TC-AUTH-006B · Quién soy (USER_B) · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-006B\nPaso de ejecución: 021\nObjetivo: Quién soy (USER_B)\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Identidad de B, roles=[USER].\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "022 · TC-AUTH-006S · Quién soy (STAFF) · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-006S\nPaso de ejecución: 022\nObjetivo: Quién soy (STAFF)\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: e2e_staff, roles=[STAFF].\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "023 · TC-AUTH-006A · Quién soy (ADMIN) · ADMIN",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-006A\nPaso de ejecución: 023\nObjetivo: Quién soy (ADMIN)\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: e2e_admin, roles=[ADMIN].\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 Usuarios / consulta y propiedad (2 rutas)",
+      "description": "",
+      "item": [
+        {
+          "name": "050 · E2E-USR-02 · Usuario por email (propio) · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-email?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-USR-02\nPaso de ejecución: 050\nObjetivo: Usuario por email (propio)\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: UserResponse de A.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "051 · E2E-USR-03 · Usuario por username (propio) · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-username?username={{userAUsername}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-username"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "{{userAUsername}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-USR-03\nPaso de ejecución: 051\nObjetivo: Usuario por username (propio)\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: UserResponse de A.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "052 · TC-USR-ADM · ADMIN consulta a USER_A por email · ADMIN",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-email?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-USR-ADM\nPaso de ejecución: 052\nObjetivo: ADMIN consulta a USER_A por email\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con datos de A (ADMIN autorizado).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 Events / administración y visibilidad (6 rutas)",
+      "description": "",
+      "item": [
+        {
+          "name": "009 · E2E-EVT-03A · Eventos publicados (antes de crear el nuevo) · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/published",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "published"
+              ]
+            },
+            "description": "ID: E2E-EVT-03A\nPaso de ejecución: 009\nObjetivo: Eventos publicados (antes de crear el nuevo)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Contiene E2E-PUB-01. NO contiene E2E-DRAFT-01 ni E2E-TOPUB-01 (ningún borrador).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "010 · E2E-EVT-02A · Evento publicado por código (visitante) · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{publishedEventCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{publishedEventCode}}"
+              ]
+            },
+            "description": "ID: E2E-EVT-02A\nPaso de ejecución: 010\nObjetivo: Evento publicado por código (visitante)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: EventResponse: eventCode, status=PUBLISHED, venueCode, venueName, artists (incluye Solar Beat).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "012 · E2E-EVT-06A · Eventos por artista (visitante) · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "by-artist"
+              ],
+              "query": [
+                {
+                  "key": "stageName",
+                  "value": "{{artistStageName}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-EVT-06A\nPaso de ejecución: 012\nObjetivo: Eventos por artista (visitante)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Solo eventos PUBLISHED (E2E-PUB-01). Ningún borrador.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "032 · E2E-EVT-01 · Crear evento (ADMIN) · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: E2E-EVT-01\nPaso de ejecución: 032\nObjetivo: Crear evento (ADMIN)\nActor: ADMIN\nPrecondiciones: adminToken vigente (dura 15 min).\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201\nRevisión manual: EventResponse con eventCode=newEventCode, status=DRAFT, venueCode=E2E-VENUE-01, minimumAge=0.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"{{newEventCode}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "033 · E2E-EVT-02D · Leer el borrador como ADMIN · ADMIN",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}"
+              ]
+            },
+            "description": "ID: E2E-EVT-02D\nPaso de ejecución: 033\nObjetivo: Leer el borrador como ADMIN\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con status=DRAFT (el ADMIN sí ve borradores).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "035 · E2E-EVT-03B · Publicados: el nuevo aún no aparece · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/published",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "published"
+              ]
+            },
+            "description": "ID: E2E-EVT-03B\nPaso de ejecución: 035\nObjetivo: Publicados: el nuevo aún no aparece\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: NO contiene newEventCode (sigue en borrador).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "036 · E2E-EVT-05 · Asociar artista al evento (ADMIN) · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}/artists/{{artistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}",
+                "artists",
+                "{{artistId}}"
+              ]
+            },
+            "description": "ID: E2E-EVT-05\nPaso de ejecución: 036\nObjetivo: Asociar artista al evento (ADMIN)\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: EventResponse con 'Solar Beat' en artists.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "038 · E2E-EVT-04 · Publicar evento (ADMIN) · ADMIN",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}",
+                "publish"
+              ]
+            },
+            "description": "ID: E2E-EVT-04\nPaso de ejecución: 038\nObjetivo: Publicar evento (ADMIN)\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=PUBLISHED en la respuesta.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "039 · E2E-EVT-02B · El evento ya es público (visitante) · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}"
+              ]
+            },
+            "description": "ID: E2E-EVT-02B\nPaso de ejecución: 039\nObjetivo: El evento ya es público (visitante)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con status=PUBLISHED y el artista asociado.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "040 · E2E-EVT-03C · Publicados: ahora aparece el nuevo · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/published",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "published"
+              ]
+            },
+            "description": "ID: E2E-EVT-03C\nPaso de ejecución: 040\nObjetivo: Publicados: ahora aparece el nuevo\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Contiene newEventCode.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "041 · E2E-EVT-06B · Por artista: aparece el nuevo · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "by-artist"
+              ],
+              "query": [
+                {
+                  "key": "stageName",
+                  "value": "{{artistStageName}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-EVT-06B\nPaso de ejecución: 041\nObjetivo: Por artista: aparece el nuevo\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Contiene E2E-PUB-01 y newEventCode.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 Tickets / compra, consulta y ciclo de vida (6 rutas)",
+      "description": "",
+      "item": [
+        {
+          "name": "056 · E2E-TKT-01 · Comprar ticket T1 (USER_A) · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: E2E-TKT-01\nPaso de ejecución: 056\nObjetivo: Comprar ticket T1 (USER_A)\nActor: USER_A\nPrecondiciones: E2E-PUB-01 publicado y userAToken vigente.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201\nRevisión manual: ticketCode generado, type=GENERAL, userEmail=A, eventCode=E2E-PUB-01. Anota el status inicial.\nCOPIAR a mano: ticketCode -> variable ticketCancelableCode\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"{{publishedEventCode}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "057 · E2E-TKT-02 · Ver ticket T1 (propietario) · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}"
+              ]
+            },
+            "description": "ID: E2E-TKT-02\nPaso de ejecución: 057\nObjetivo: Ver ticket T1 (propietario)\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Ticket de A, mismo ticketCode.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "058 · E2E-TKT-03 · Tickets de USER_A · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/by-user?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "by-user"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: E2E-TKT-03\nPaso de ejecución: 058\nObjetivo: Tickets de USER_A\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Arreglo con T1.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "059 · TC-BIZ-007B · Comprar ticket T2 (USER_A) · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-BIZ-007B\nPaso de ejecución: 059\nObjetivo: Comprar ticket T2 (USER_A)\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201\nRevisión manual: Segundo ticket independiente, ticketCode distinto a T1.\nCOPIAR a mano: ticketCode -> variable ticketUsableCode\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"{{publishedEventCode}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "060 · E2E-TKT-04 · Tickets pagados del evento (STAFF) · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{publishedEventCode}}/tickets/paid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{publishedEventCode}}",
+                "tickets",
+                "paid"
+              ]
+            },
+            "description": "ID: E2E-TKT-04\nPaso de ejecución: 060\nObjetivo: Tickets pagados del evento (STAFF)\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Incluye los tickets elegibles. Si T1/T2 no aparecen, revisa su status en TC-BIZ-007.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "070 · E2E-TKT-05 · Cancelar T1 (propietario) · USER_A",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}",
+                "cancel"
+              ]
+            },
+            "description": "ID: E2E-TKT-05\nPaso de ejecución: 070\nObjetivo: Cancelar T1 (propietario)\nActor: USER_A\nPrecondiciones: Haber ejecutado antes TC-SEC-009 a TC-SEC-012.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=CANCELLED.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "073 · E2E-TKT-06 · Marcar T2 como usado (STAFF) · STAFF",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}",
+                "use"
+              ]
+            },
+            "description": "ID: E2E-TKT-06\nPaso de ejecución: 073\nObjetivo: Marcar T2 como usado (STAFF)\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=USED.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "07 Seguridad / escenarios negativos",
+      "description": "",
+      "item": [
+        {
+          "name": "011 · TC-SEC-004 · Borrador por código siendo visitante · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{draftEventCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{draftEventCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-004\nPaso de ejecución: 011\nObjetivo: Borrador por código siendo visitante\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404 o 403 (política definida); sin datos del borrador\nRevisión manual: No debe aparecer ningún dato del evento E2E-DRAFT-01. Anota qué código devolvió (403 o 404).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "024 · TC-AUTH-004 · Login con password incorrecta · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-004\nPaso de ejecución: 024\nObjetivo: Login con password incorrecta\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: ErrorResponse 401 con mensaje genérico. Anota el message: debe ser igual al del caso siguiente.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{userAUsername}}\",\n  \"password\": \"ClaveIncorrecta-123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "025 · TC-AUTH-005 · Login con identificador inexistente · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-005\nPaso de ejecución: 025\nObjetivo: Login con identificador inexistente\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: 401 con el MISMO mensaje que TC-AUTH-004 (sin enumerar usuarios).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"noexiste_{{runId}}\",\n  \"password\": \"ClaveIncorrecta-123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "026 · TC-AUTH-007 · /me sin header Authorization · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-007\nPaso de ejecución: 026\nObjetivo: /me sin header Authorization\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: ErrorResponse 401.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "027 · TC-AUTH-008 · Bearer inventado · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-008\nPaso de ejecución: 027\nObjetivo: Bearer inventado\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer token.inventado.malformado\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: ErrorResponse 401.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "token.inventado.malformado",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "028 · TC-AUTH-009 · JWT alterado (un carácter) · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "ID: TC-AUTH-009\nPaso de ejecución: 028\nObjetivo: JWT alterado (un carácter)\nActor: USER_A\nPrecondiciones: En la pestaña Authorization cambia el ÚLTIMO carácter del token. NO guardes ese cambio.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: 401; nunca llega al controlador.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "029 · TC-AUTH-012 · Token por query string · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me?access_token={{userAToken}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ],
+              "query": [
+                {
+                  "key": "access_token",
+                  "value": "{{userAToken}}"
+                }
+              ]
+            },
+            "description": "ID: TC-AUTH-012\nPaso de ejecución: 029\nObjetivo: Token por query string\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: 401: el token en la URL no autentica.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "030 · TC-AUTH-013 · Login de usuario inactivo · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-AUTH-013\nPaso de ejecución: 030\nObjetivo: Login de usuario inactivo\nActor: ANONYMOUS\nPrecondiciones: Seed aplicado; inactivePassword igual al usado con -v inactive_pw.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: 401; la respuesta NO trae accessToken.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{inactiveIdentifier}}\",\n  \"password\": \"{{inactivePassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "031 · TC-AUTH-015 · JWT inválido en endpoint público · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/venues/active",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "venues",
+                "active"
+              ]
+            },
+            "description": "ID: TC-AUTH-015\nPaso de ejecución: 031\nObjetivo: JWT inválido en endpoint público\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer token.inventado.malformado\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401 (el filtro JWT rechaza tokens inválidos incluso en rutas públicas)\nRevisión manual: Documenta la política observada: 401 o 200. El código actual rechaza con 401.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "token.inventado.malformado",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "034 · TC-SEC-015B · STAFF lee un borrador · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{draftEventCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{draftEventCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-015B\nPaso de ejecución: 034\nObjetivo: STAFF lee un borrador\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: 200 con status=DRAFT (STAFF/ADMIN pueden ver borradores).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "037 · TC-SEC-005 · Por artista (visitante) con un borrador asociado · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "by-artist"
+              ],
+              "query": [
+                {
+                  "key": "stageName",
+                  "value": "{{artistStageName}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-005\nPaso de ejecución: 037\nObjetivo: Por artista (visitante) con un borrador asociado\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Contiene E2E-PUB-01 pero NO newEventCode (aún borrador).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "042 · TC-SEC-001A · Crear evento sin token · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-SEC-001A\nPaso de ejecución: 042\nObjetivo: Crear evento sin token\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: ErrorResponse 401. No se crea el evento.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "043 · TC-SEC-001B · Crear evento como USER_A · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-SEC-001B\nPaso de ejecución: 043\nObjetivo: Crear evento como USER_A\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: ErrorResponse 403. No se crea el evento.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "044 · TC-SEC-001C · Crear evento como STAFF · STAFF",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-SEC-001C\nPaso de ejecución: 044\nObjetivo: Crear evento como STAFF\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: ErrorResponse 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "045 · TC-SEC-002A · Publicar como USER_A · USER_A",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventToPublishCode}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventToPublishCode}}",
+                "publish"
+              ]
+            },
+            "description": "ID: TC-SEC-002A\nPaso de ejecución: 045\nObjetivo: Publicar como USER_A\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "046 · TC-SEC-002B · Publicar como STAFF · STAFF",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventToPublishCode}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventToPublishCode}}",
+                "publish"
+              ]
+            },
+            "description": "ID: TC-SEC-002B\nPaso de ejecución: 046\nObjetivo: Publicar como STAFF\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "047 · TC-SEC-003A · Asociar artista como USER_A · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventToPublishCode}}/artists/{{artistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventToPublishCode}}",
+                "artists",
+                "{{artistId}}"
+              ]
+            },
+            "description": "ID: TC-SEC-003A\nPaso de ejecución: 047\nObjetivo: Asociar artista como USER_A\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "048 · TC-SEC-003B · Asociar artista como STAFF · STAFF",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventToPublishCode}}/artists/{{artistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventToPublishCode}}",
+                "artists",
+                "{{artistId}}"
+              ]
+            },
+            "description": "ID: TC-SEC-003B\nPaso de ejecución: 048\nObjetivo: Asociar artista como STAFF\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "049 · TC-SEC-INT1 · Integridad: E2E-TOPUB-01 sigue en borrador · ADMIN",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventToPublishCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventToPublishCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-INT1\nPaso de ejecución: 049\nObjetivo: Integridad: E2E-TOPUB-01 sigue en borrador\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=DRAFT y sin artistas: los 403 anteriores no cambiaron nada.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "053 · TC-SEC-006A · Consultar usuario por email sin token · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-email?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-006A\nPaso de ejecución: 053\nObjetivo: Consultar usuario por email sin token\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 401\nRevisión manual: ErrorResponse 401.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "054 · TC-SEC-006 · USER_B consulta a A por email · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-email?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-006\nPaso de ejecución: 054\nObjetivo: USER_B consulta a A por email\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)\nRevisión manual: Sin datos personales de A. Anota 403 o 404.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "055 · TC-SEC-007 · USER_B consulta a A por username · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-username?username={{userAUsername}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-username"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "{{userAUsername}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-007\nPaso de ejecución: 055\nObjetivo: USER_B consulta a A por username\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)\nRevisión manual: Sin datos personales de A. Mismo código que TC-SEC-006.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "061 · TC-SEC-013 · Tickets pagados como USER_A · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{publishedEventCode}}/tickets/paid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{publishedEventCode}}",
+                "tickets",
+                "paid"
+              ]
+            },
+            "description": "ID: TC-SEC-013\nPaso de ejecución: 061\nObjetivo: Tickets pagados como USER_A\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "062 · TC-SEC-009 · USER_B lee el ticket de A · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-009\nPaso de ejecución: 062\nObjetivo: USER_B lee el ticket de A\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)\nRevisión manual: Sin datos del ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "063 · TC-SEC-010 · USER_B lista tickets del email de A · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/by-user?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "by-user"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-010\nPaso de ejecución: 063\nObjetivo: USER_B lista tickets del email de A\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)\nRevisión manual: Sin información de A.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "064 · TC-SEC-011 · USER_B cancela el ticket T1 · USER_B",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}",
+                "cancel"
+              ]
+            },
+            "description": "ID: TC-SEC-011\nPaso de ejecución: 064\nObjetivo: USER_B cancela el ticket T1\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)\nRevisión manual: Denegado; el ticket no debe cambiar.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "065 · TC-SEC-012 · USER_B marca como usado el ticket T2 · USER_B",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}",
+                "use"
+              ]
+            },
+            "description": "ID: TC-SEC-012\nPaso de ejecución: 065\nObjetivo: USER_B marca como usado el ticket T2\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403; el ticket no debe cambiar.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "068 · TC-SEC-008 · USER_A compra con el email de USER_B · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-SEC-008\nPaso de ejecución: 068\nObjetivo: USER_A compra con el email de USER_B\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: denegado (anota el código)\nRevisión manual: Rechazado; ErrorResponse; no se crea ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userBEmail}}\",\n  \"eventCode\": \"{{publishedEventCode}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "076 · TC-SEC-012B · USER_A intenta usar su propio ticket · USER_A",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}",
+                "use"
+              ]
+            },
+            "description": "ID: TC-SEC-012B\nPaso de ejecución: 076\nObjetivo: USER_A intenta usar su propio ticket\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 403\nRevisión manual: 403 (USER no puede marcar uso).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "082 · TC-SEC-016 · Registro con role=ADMIN inyectado · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-SEC-016\nPaso de ejecución: 082\nObjetivo: Registro con role=ADMIN inyectado\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 201 o 400 (campo role ignorado o rechazado)\nRevisión manual: El usuario NUNCA debe ser ADMIN. Verifica en BD: docker exec -i pulsepass-db psql -U pulsepass -d pulsepass_e2e -c \"SELECT u.username, r.role FROM users u JOIN user_roles r ON r.user_id=u.id WHERE u.username LIKE 'inject_%';\" (solo USER, o ninguna fila si el registro fue 400).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"inject_{{runId}}\",\n  \"email\": \"inject.{{runId}}@example.test\",\n  \"password\": \"{{userBPassword}}\",\n  \"firstName\": \"Inyec\",\n  \"lastName\": \"Cion\",\n  \"birthDate\": \"1998-05-15\",\n  \"role\": \"ADMIN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "08 Validaciones y errores HTTP",
+      "description": "",
+      "item": [
+        {
+          "name": "078 · TC-VAL-01 · Registro con email mal formado · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-VAL-01\nPaso de ejecución: 078\nObjetivo: Registro con email mal formado\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: ErrorResponse 400 con details sobre email.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{userAUsername}}\",\n  \"email\": \"no-es-un-email\",\n  \"password\": \"{{userAPassword}}\",\n  \"firstName\": \"Andrea\",\n  \"lastName\": \"Pruebas\",\n  \"birthDate\": \"1998-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "079 · TC-VAL-02 · Registro con password corta (<12) · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-VAL-02\nPaso de ejecución: 079\nObjetivo: Registro con password corta (<12)\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre password (12 a 72 caracteres).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"corta_{{runId}}\",\n  \"email\": \"corta.{{runId}}@example.test\",\n  \"password\": \"Corta1!\",\n  \"firstName\": \"Andrea\",\n  \"lastName\": \"Pruebas\",\n  \"birthDate\": \"1998-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "080 · TC-VAL-03 · Registro con campos obligatorios ausentes · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-VAL-03\nPaso de ejecución: 080\nObjetivo: Registro con campos obligatorios ausentes\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details de varios campos.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"solo_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "081 · TC-VAL-04 · Registro duplicado de USER_A · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "ID: TC-VAL-04\nPaso de ejecución: 081\nObjetivo: Registro duplicado de USER_A\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 409\nRevisión manual: 409 (username/email ya existen); sin datos internos.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{userAUsername}}\",\n  \"email\": \"{{userAEmail}}\",\n  \"password\": \"{{userAPassword}}\",\n  \"firstName\": \"Andrea\",\n  \"lastName\": \"Pruebas\",\n  \"birthDate\": \"1998-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "083 · TC-VAL-05 · Login con password en blanco · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-VAL-05\nPaso de ejecución: 083\nObjetivo: Login con password en blanco\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre password.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{userAUsername}}\",\n  \"password\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "084 · TC-VAL-06 · Login con JSON malformado · ANONYMOUS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "ID: TC-VAL-06\nPaso de ejecución: 084\nObjetivo: Login con JSON malformado\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con ErrorResponse; sin stack trace.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"identifier\": \"x\", ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "085 · TC-VAL-07 · Evento con categoría inválida · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-VAL-07\nPaso de ejecución: 085\nObjetivo: Evento con categoría inválida\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400; no se crea el evento.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"NO_EXISTE\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "086 · TC-VAL-08 · Evento sin nombre · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-VAL-08\nPaso de ejecución: 086\nObjetivo: Evento sin nombre\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre name.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "087 · TC-VAL-09 · Evento con edad mínima negativa · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-VAL-09\nPaso de ejecución: 087\nObjetivo: Evento con edad mínima negativa\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre minimumAge.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": -1,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "088 · TC-VAL-10 · Compra sin tipo de ticket · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-VAL-10\nPaso de ejecución: 088\nObjetivo: Compra sin tipo de ticket\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre type.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"{{publishedEventCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "089 · TC-VAL-11 · Compra con tipo de ticket inválido · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-VAL-11\nPaso de ejecución: 089\nObjetivo: Compra con tipo de ticket inválido\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400; no se crea ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"{{publishedEventCode}}\",\n  \"type\": \"VIP_PLUS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "090 · TC-VAL-12 · Compra con email mal formado · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-VAL-12\nPaso de ejecución: 090\nObjetivo: Compra con email mal formado\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 con details sobre userEmail.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"no-es-un-email\",\n  \"eventCode\": \"{{publishedEventCode}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "091 · TC-VAL-13 · Evento inexistente · ANONYMOUS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/NO-EXISTE-{{runId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "NO-EXISTE-{{runId}}"
+              ]
+            },
+            "description": "ID: TC-VAL-13\nPaso de ejecución: 091\nObjetivo: Evento inexistente\nActor: ANONYMOUS\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Sin Authorization (pestaña Authorization en No Auth)\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: ErrorResponse 404.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "092 · TC-VAL-14 · Ticket inexistente · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/TKT-NO-EXISTE-{{runId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "TKT-NO-EXISTE-{{runId}}"
+              ]
+            },
+            "description": "ID: TC-VAL-14\nPaso de ejecución: 092\nObjetivo: Ticket inexistente\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: ErrorResponse 404.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "093 · TC-VAL-15 · by-email sin el parámetro email · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/by-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "by-email"
+              ]
+            },
+            "description": "ID: TC-VAL-15\nPaso de ejecución: 093\nObjetivo: by-email sin el parámetro email\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 400\nRevisión manual: 400 (parámetro obligatorio ausente), sin stack trace.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "094 · TC-VAL-16 · Crear evento con código duplicado · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-VAL-16\nPaso de ejecución: 094\nObjetivo: Crear evento con código duplicado\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 409\nRevisión manual: 409: newEventCode ya existe; no se duplica.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"{{newEventCode}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"{{venueActiveCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "095 · TC-VAL-17 · Crear evento con venue inexistente · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "ID: TC-VAL-17\nPaso de ejecución: 095\nObjetivo: Crear evento con venue inexistente\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: 404 (o el código del contrato); no se crea.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventCode\": \"E2E-NEG-{{runId}}\",\n  \"name\": \"PulsePass E2E {{runId}}\",\n  \"description\": \"Evento de prueba manual\",\n  \"category\": \"MUSIC\",\n  \"eventDate\": \"2028-06-15T20:00:00\",\n  \"minimumAge\": 0,\n  \"venueCode\": \"NO-EXISTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "096 · TC-VAL-18 · Comprar para evento inexistente · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-VAL-18\nPaso de ejecución: 096\nObjetivo: Comprar para evento inexistente\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 404\nRevisión manual: 404; no se crea ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"NO-EXISTE-{{runId}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "09 Flujos de negocio / secuencia recomendada",
+      "description": "Verificaciones de integridad y transiciones. La secuencia GLOBAL de ejecución es el número que antecede a cada nombre (001, 002, ...) y está listada en checklist-e2e-manual.md.",
+      "item": [
+        {
+          "name": "066 · TC-SEC-INT2 · Integridad: T1 sin cambios · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-INT2\nPaso de ejecución: 066\nObjetivo: Integridad: T1 sin cambios\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Mismo status que justo tras la compra (no cancelado por B).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "067 · TC-SEC-INT3 · Integridad: T2 sin cambios · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}"
+              ]
+            },
+            "description": "ID: TC-SEC-INT3\nPaso de ejecución: 067\nObjetivo: Integridad: T2 sin cambios\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Mismo status que tras la compra (no usado por B).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "069 · TC-SEC-INT4 · Integridad: USER_B no tiene tickets · USER_B",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/by-user?email={{userBEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "by-user"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userBEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-SEC-INT4\nPaso de ejecución: 069\nObjetivo: Integridad: USER_B no tiene tickets\nActor: USER_B\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userBToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Arreglo vacío: la compra ajena no generó ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "071 · TC-BIZ-010 · Verificar T1 cancelado · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}"
+              ]
+            },
+            "description": "ID: TC-BIZ-010\nPaso de ejecución: 071\nObjetivo: Verificar T1 cancelado\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=CANCELLED persistido.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "072 · TC-BIZ-011 · Cancelar T1 otra vez · USER_A",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketCancelableCode}}",
+                "cancel"
+              ]
+            },
+            "description": "ID: TC-BIZ-011\nPaso de ejecución: 072\nObjetivo: Cancelar T1 otra vez\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 409 (o la regla del Service)\nRevisión manual: Sin mutación; ErrorResponse.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "074 · TC-BIZ-012 · Verificar T2 usado · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}"
+              ]
+            },
+            "description": "ID: TC-BIZ-012\nPaso de ejecución: 074\nObjetivo: Verificar T2 usado\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: status=USED persistido.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "075 · TC-BIZ-013 · Marcar T2 usado otra vez · STAFF",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/{{ticketUsableCode}}/use",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "{{ticketUsableCode}}",
+                "use"
+              ]
+            },
+            "description": "ID: TC-BIZ-013\nPaso de ejecución: 075\nObjetivo: Marcar T2 usado otra vez\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 409 (o la regla del Service)\nRevisión manual: No hay doble transición.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "077 · TC-BIZ-009B · Pagados tras cancelar y usar · STAFF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{publishedEventCode}}/tickets/paid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{publishedEventCode}}",
+                "tickets",
+                "paid"
+              ]
+            },
+            "description": "ID: TC-BIZ-009B\nPaso de ejecución: 077\nObjetivo: Pagados tras cancelar y usar\nActor: STAFF\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{staffToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: No incluye T1 (CANCELLED) ni T2 (USED).\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "097 · TC-BIZ-014 · Comprar ticket de un evento en borrador · USER_A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets"
+              ]
+            },
+            "description": "ID: TC-BIZ-014\nPaso de ejecución: 097\nObjetivo: Comprar ticket de un evento en borrador\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: error de negocio (400/404/409 según contrato)\nRevisión manual: Rechazado; no se persiste ticket.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{userAEmail}}\",\n  \"eventCode\": \"{{draftEventCode}}\",\n  \"type\": \"GENERAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "098 · TC-BIZ-014V · Verificar que no se creó ticket · USER_A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets/by-user?email={{userAEmail}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "tickets",
+                "by-user"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{userAEmail}}"
+                }
+              ]
+            },
+            "description": "ID: TC-BIZ-014V\nPaso de ejecución: 098\nObjetivo: Verificar que no se creó ticket\nActor: USER_A\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{userAToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200\nRevisión manual: Solo T1 (CANCELLED) y T2 (USED); ninguno del borrador.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "099 · TC-BIZ-005R · Asociar el mismo artista otra vez · ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}/artists/{{artistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}",
+                "artists",
+                "{{artistId}}"
+              ]
+            },
+            "description": "ID: TC-BIZ-005R\nPaso de ejecución: 099\nObjetivo: Asociar el mismo artista otra vez\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200 o 409 (regla del Service)\nRevisión manual: Anota el comportamiento; el artista no debe quedar duplicado en artists.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "100 · TC-BIZ-004R · Publicar un evento ya publicado · ADMIN",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{newEventCode}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{newEventCode}}",
+                "publish"
+              ]
+            },
+            "description": "ID: TC-BIZ-004R\nPaso de ejecución: 100\nObjetivo: Publicar un evento ya publicado\nActor: ADMIN\nPrecondiciones: Backend arriba y pasos anteriores ejecutados.\nAutorización: Bearer {{adminToken}}\nEjecución: abrir request y pulsar Send\nHTTP esperado: 200 o 409 (regla del Service)\nRevisión manual: Anota el comportamiento; el evento sigue PUBLISHED.\nEvidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md\nLa pestaña de scripts debe permanecer vacía.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

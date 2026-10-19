@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  ID: TC-SEC-001C
+  Paso de ejecución: 044
+  Objetivo: Crear evento como STAFF
+  Actor: STAFF
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{staffToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403
+  Revisión manual: ErrorResponse 403.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "eventCode": "E2E-NEG-{{runId}}",
+      "name": "PulsePass E2E {{runId}}",
+      "description": "Evento de prueba manual",
+      "category": "MUSIC",
+      "eventDate": "2028-06-15T20:00:00",
+      "minimumAge": 0,
+      "venueCode": "{{venueActiveCode}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{staffToken}}"
+order: 14000

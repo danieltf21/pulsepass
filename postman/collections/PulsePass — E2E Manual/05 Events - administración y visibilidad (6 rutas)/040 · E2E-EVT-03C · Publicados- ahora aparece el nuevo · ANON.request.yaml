@@ -1,0 +1,21 @@
+$kind: http-request
+name: "040 · E2E-EVT-03C · Publicados: ahora aparece el nuevo · ANONYMOUS"
+description: |-
+  ID: E2E-EVT-03C
+  Paso de ejecución: 040
+  Objetivo: Publicados: ahora aparece el nuevo
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Contiene newEventCode.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/published"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 10000

@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  ID: E2E-USR-03
+  Paso de ejecución: 051
+  Objetivo: Usuario por username (propio)
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: UserResponse de A.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/users/by-username?username={{userAUsername}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  username: "{{userAUsername}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 2000

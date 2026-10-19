@@ -1,0 +1,29 @@
+$kind: http-request
+description: |-
+  ID: TC-AUTH-002B
+  Paso de ejecución: 017
+  Objetivo: Login USER_B
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: 200 con accessToken.
+  COPIAR a mano: accessToken -> variable userBToken
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "identifier": "{{userBUsername}}",
+      "password": "{{userBPassword}}"
+    }
+auth:
+  type: noauth
+order: 5000

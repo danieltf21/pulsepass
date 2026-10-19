@@ -1,0 +1,23 @@
+$kind: http-request
+name: 012 · E2E-EVT-06A · Eventos por artista (visitante) · ANONYMOUS
+description: |-
+  ID: E2E-EVT-06A
+  Paso de ejecución: 012
+  Objetivo: Eventos por artista (visitante)
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Solo eventos PUBLISHED (E2E-PUB-01). Ningún borrador.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  stageName: "{{artistStageName}}"
+auth:
+  type: noauth
+order: 3000

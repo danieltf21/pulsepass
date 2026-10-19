@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  ID: TC-VAL-17
+  Paso de ejecución: 095
+  Objetivo: Crear evento con venue inexistente
+  Actor: ADMIN
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{adminToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 404
+  Revisión manual: 404 (o el código del contrato); no se crea.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "eventCode": "E2E-NEG-{{runId}}",
+      "name": "PulsePass E2E {{runId}}",
+      "description": "Evento de prueba manual",
+      "category": "MUSIC",
+      "eventDate": "2028-06-15T20:00:00",
+      "minimumAge": 0,
+      "venueCode": "NO-EXISTE"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 17000

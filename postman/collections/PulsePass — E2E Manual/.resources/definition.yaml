@@ -1,0 +1,2 @@
+$kind: collection
+description: "Colección Postman v2.1 para pruebas end-to-end MANUALES de PulsePass (Fase 5). Sin scripts de Pre-request ni Tests: cada request se envía con Send y el resultado se compara a mano. Sigue el orden numérico de los nombres (001, 002, ...). Tokens y contraseñas viven solo en el ambiente local."

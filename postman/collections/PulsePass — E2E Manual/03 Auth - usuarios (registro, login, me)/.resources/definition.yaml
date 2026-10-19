@@ -1,0 +1,3 @@
+$kind: collection
+name: 03 Auth / usuarios (registro, login, me)
+order: 4000

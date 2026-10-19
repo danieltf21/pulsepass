@@ -1,0 +1,21 @@
+$kind: http-request
+name: 010 · E2E-EVT-02A · Evento publicado por código (visitante) · ANONYMOUS
+description: |-
+  ID: E2E-EVT-02A
+  Paso de ejecución: 010
+  Objetivo: Evento publicado por código (visitante)
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: EventResponse: eventCode, status=PUBLISHED, venueCode, venueName, artists (incluye Solar Beat).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{publishedEventCode}}"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 2000

@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-BIZ-011
+  Paso de ejecución: 072
+  Objetivo: Cancelar T1 otra vez
+  Actor: USER_A
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userAToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 409 (o la regla del Service)
+  Revisión manual: Sin mutación; ErrorResponse.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}/cancel"
+method: PATCH
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userAToken}}"
+order: 5000

@@ -1,0 +1,23 @@
+$kind: http-request
+name: "041 · E2E-EVT-06B · Por artista: aparece el nuevo · ANONYMOUS"
+description: |-
+  ID: E2E-EVT-06B
+  Paso de ejecución: 041
+  Objetivo: Por artista: aparece el nuevo
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Contiene E2E-PUB-01 y newEventCode.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/by-artist?stageName={{artistStageName}}"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  stageName: "{{artistStageName}}"
+auth:
+  type: noauth
+order: 11000

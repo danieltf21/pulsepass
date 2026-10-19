@@ -1,0 +1,21 @@
+$kind: http-request
+name: "035 · E2E-EVT-03B · Publicados: el nuevo aún no aparece · ANONYMOUS"
+description: |-
+  ID: E2E-EVT-03B
+  Paso de ejecución: 035
+  Objetivo: Publicados: el nuevo aún no aparece
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: NO contiene newEventCode (sigue en borrador).
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/published"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 6000

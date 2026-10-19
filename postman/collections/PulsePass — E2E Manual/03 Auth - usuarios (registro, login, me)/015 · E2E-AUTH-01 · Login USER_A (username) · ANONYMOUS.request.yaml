@@ -1,0 +1,29 @@
+$kind: http-request
+description: |-
+  ID: E2E-AUTH-01
+  Paso de ejecución: 015
+  Objetivo: Login USER_A (username)
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: accessToken no vacío, tokenType=Bearer, expiresIn=900.
+  COPIAR a mano: accessToken -> variable userAToken (solo el valor, sin comillas)
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "identifier": "{{userAUsername}}",
+      "password": "{{userAPassword}}"
+    }
+auth:
+  type: noauth
+order: 3000

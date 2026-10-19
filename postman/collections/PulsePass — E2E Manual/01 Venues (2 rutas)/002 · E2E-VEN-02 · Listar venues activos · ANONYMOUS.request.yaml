@@ -1,0 +1,20 @@
+$kind: http-request
+description: |-
+  ID: E2E-VEN-02
+  Paso de ejecución: 002
+  Objetivo: Listar venues activos
+  Actor: ANONYMOUS
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Sin Authorization (pestaña Authorization en No Auth)
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Solo venues con active=true; incluye venueActiveCode.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/venues/active"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: noauth
+order: 1000

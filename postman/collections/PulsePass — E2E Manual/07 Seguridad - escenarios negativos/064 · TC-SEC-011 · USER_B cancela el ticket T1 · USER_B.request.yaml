@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: TC-SEC-011
+  Paso de ejecución: 064
+  Objetivo: USER_B cancela el ticket T1
+  Actor: USER_B
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{userBToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 403 o 404* (la política única que adoptes para recurso ajeno)
+  Revisión manual: Denegado; el ticket no debe cambiar.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/tickets/{{ticketCancelableCode}}/cancel"
+method: PATCH
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{userBToken}}"
+order: 26000

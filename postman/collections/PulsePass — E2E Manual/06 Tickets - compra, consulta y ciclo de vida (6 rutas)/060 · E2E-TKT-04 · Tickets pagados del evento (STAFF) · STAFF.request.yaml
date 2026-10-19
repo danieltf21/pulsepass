@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  ID: E2E-TKT-04
+  Paso de ejecución: 060
+  Objetivo: Tickets pagados del evento (STAFF)
+  Actor: STAFF
+  Precondiciones: Backend arriba y pasos anteriores ejecutados.
+  Autorización: Bearer {{staffToken}}
+  Ejecución: abrir request y pulsar Send
+  HTTP esperado: 200
+  Revisión manual: Incluye los tickets elegibles. Si T1/T2 no aparecen, revisa su status en TC-BIZ-007.
+  Evidencia: anotar HTTP real, resultado y observación en registro-ejecucion-manual.md
+  La pestaña de scripts debe permanecer vacía.
+url: "{{baseUrl}}/api/events/{{publishedEventCode}}/tickets/paid"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{staffToken}}"
+order: 5000
