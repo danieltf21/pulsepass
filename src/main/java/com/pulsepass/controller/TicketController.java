@@ -45,7 +45,10 @@ public class TicketController {
                                                      @AuthenticationPrincipal SecurityPrincipal principal) {
         TicketResponse response = service.findByCode(ticketCode);
         Long ownerId = userService.findByEmail(response.userEmail()).id();
-        authorizationService.requireOwnerOrAdmin(principal, ownerId);
+        // Staff may inspect individual tickets to validate admission.
+        if (!authorizationService.hasRole(principal, "STAFF")) {
+            authorizationService.requireOwnerOrAdmin(principal, ownerId);
+        }
         return ResponseEntity.ok(response);
     }
 
