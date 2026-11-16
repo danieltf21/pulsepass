@@ -4,10 +4,9 @@ import com.pulsepass.domain.enums.TicketStatus;
 import com.pulsepass.domain.enums.TicketType;
 import com.pulsepass.dto.response.TicketResponse;
 import com.pulsepass.dto.response.UserResponse;
-import com.pulsepass.exception.ForbiddenOperationException;
 import com.pulsepass.exception.GlobalExceptionHandler;
 import com.pulsepass.security.*;
-import com.pulsepass.services.AuthorizationService;
+import com.pulsepass.services.impl.AuthorizationServiceImpl;
 import com.pulsepass.services.TicketService;
 import com.pulsepass.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -30,12 +29,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TicketController.class)
-@Import({SecurityConfig.class, RestAuthenticationEntryPoint.class, RestAccessDeniedHandler.class, GlobalExceptionHandler.class})
+@Import({SecurityConfig.class, RestAuthenticationEntryPoint.class, RestAccessDeniedHandler.class, GlobalExceptionHandler.class, AuthorizationServiceImpl.class})
 class TicketControllerSecurityTest {
 
     @Autowired private MockMvc mockMvc;
     @MockitoBean private TicketService service;
-    @MockitoBean private AuthorizationService authorizationService;
     @MockitoBean private UserService userService;
     @MockitoBean private JwtService jwtService;
     @MockitoBean private CustomUserDetailsService userDetailsService;
@@ -82,11 +80,68 @@ class TicketControllerSecurityTest {
         when(service.findByCode("TCK-1")).thenReturn(ticket("TCK-1", "carlos@email.com", TicketStatus.PAID));
         when(userService.findByEmail("carlos@email.com")).thenReturn(
                 new UserResponse(2L, "carlos", "carlos@email.com", true, "Carlos", "Perez"));
-        doThrow(new ForbiddenOperationException("forbidden"))
-                .when(authorizationService).requireOwnerOrAdmin(any(), eq(2L));
 
         mockMvc.perform(get("/api/tickets/{code}", "TCK-1").with(user(andrea)))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void staffCanReadSomeoneElsesTicket() throws Exception {
+        assertCanReadTicket(laura);
+    }
+
+    @Test
+    void adminCanReadSomeoneElsesTicket() throws Exception {
+        assertCanReadTicket(new SecurityPrincipal(3L, "admin", "admin@email.com", "hash", true, Set.of("ADMIN")));
+    }
+
+    @Test
+    void ownerCanReadTheirTicket() throws Exception {
+        assertCanReadTicket(andrea);
+    }
+
+    private void assertCanReadTicket(SecurityPrincipal principal) throws Exception {
+        when(service.findByCode("TCK-1")).thenReturn(ticket("TCK-1", "andrea@email.com", TicketStatus.PAID));
+        when(userService.findByEmail("andrea@email.com")).thenReturn(
+                new UserResponse(1L, "andrea", "andrea@email.com", true, "Andrea", "Perez"));
+
+        mockMvc.perform(get("/api/tickets/{code}", "TCK-1").with(user(principal)))
+                .andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.ticketCode").value("TCK-1"));
+    }
+
+    @Test
+    void anonymousCannotReadTicket() throws Exception {
+        mockMvc.perform(get("/api/tickets/{code}", "TCK-1"))
+                .andExpect(status().isUnauthorized());
+        verifyNoInteractions(service, userService);
+    }
+
+    @Test
+    void staffCannotListSomeoneElsesTicketsByUser() throws Exception {
+        when(userService.findByEmail("andrea@email.com")).thenReturn(
+                new UserResponse(1L, "andrea", "andrea@email.com", true, "Andrea", "Perez"));
+        mockMvc.perform(get("/api/tickets/by-user").param("email", "andrea@email.com").with(user(laura)))
+                .andExpect(status().isForbidden());
+        verify(service, never()).findByUserEmail(anyString());
+    }
+
+    @Test
+    void staffCannotCancelTicket() throws Exception {
+        mockMvc.perform(patch("/api/tickets/{code}/cancel", "TCK-1").with(user(laura)))
+                .andExpect(status().isForbidden());
+        verify(service, never()).cancel(anyString());
+    }
+
+    @Test
+    void staffCannotPurchaseTicket() throws Exception {
+        mockMvc.perform(post("/api/tickets").with(user(laura))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"userEmail": "laura@email.com", "eventCode": "CMF-2026", "type": "VIP"}
+                                """))
+                .andExpect(status().isForbidden());
+        verify(service, never()).purchase(any());
     }
 
     // T-SEC-012
