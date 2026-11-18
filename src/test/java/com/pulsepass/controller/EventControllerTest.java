@@ -139,13 +139,14 @@ class EventControllerTest {
     @Test
     void shouldReturnPublishedEvents() throws Exception {
         EventSummaryResponse summary = new EventSummaryResponse("CMF-2026", "Caribbean Music Fest 2026",
-                EventStatus.PUBLISHED, LocalDateTime.now().plusMonths(2), "Marina Convention Center");
+                EventCategory.MUSIC, EventStatus.PUBLISHED, LocalDateTime.now().plusMonths(2), "Marina Convention Center");
         when(service.findPublishedEvents()).thenReturn(List.of(summary));
 
         mockMvc.perform(get("/api/events/published"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].status").value("PUBLISHED"));
+                .andExpect(jsonPath("$[0].status").value("PUBLISHED"))
+                .andExpect(jsonPath("$[0].category").value("MUSIC"));
 
         verify(service).findPublishedEvents();
     }
@@ -191,12 +192,13 @@ class EventControllerTest {
     @Test
     void shouldFindEventsByArtist() throws Exception {
         EventSummaryResponse summary = new EventSummaryResponse("CMF-2026", "Caribbean Music Fest 2026",
-                EventStatus.PUBLISHED, LocalDateTime.now().plusMonths(2), "Marina Convention Center");
+                EventCategory.MUSIC, EventStatus.PUBLISHED, LocalDateTime.now().plusMonths(2), "Marina Convention Center");
         when(service.findByArtist("Solar Beat")).thenReturn(List.of(summary));
 
         mockMvc.perform(get("/api/events/by-artist").param("stageName", "Solar Beat"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].category").value("MUSIC"));
 
         verify(service).findByArtist("Solar Beat");
     }

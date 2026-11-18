@@ -171,7 +171,7 @@ class PulsePassAcceptanceScenarioTest {
             @Override
             public com.pulsepass.dto.response.EventSummaryResponse toSummary(Event event) {
                 return new com.pulsepass.dto.response.EventSummaryResponse(event.getEventCode(), event.getName(),
-                        event.getStatus(), event.getEventDate(), event.getVenue().getName());
+                        event.getCategory(), event.getStatus(), event.getEventDate(), event.getVenue().getName());
             }
         };
     }
